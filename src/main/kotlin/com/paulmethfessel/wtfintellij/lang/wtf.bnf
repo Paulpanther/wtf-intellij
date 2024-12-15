@@ -17,6 +17,33 @@
     IDENTIFIER='regexp:[_a-z][_a-zA-Z0-9]*'
     VERSION='regexp:regexp:[a-z0-9][_a-zA-Z0-9-]*(\.[_a-zA-Z0-9-]+)*'
     COMMENT='regexp://.*'
+
+    PACKAGE='package'
+    USE='use'
+    LET='let'
+    VAR='var'
+    RECORD='record'
+    RESOURCE='resource'
+    FUNC='func'
+    ENUM='enum'
+    VARIANT='variant'
+    IF='if'
+    ELSE='else'
+    WHILE='while'
+    FOR='for'
+    IN='in'
+    RETURN='return'
+    MATCH='match'
+    BREAK='break'
+    CONTINUE='continue'
+
+    COLON=':'
+    AT='@'
+    SLASH='/'
+    DOT='.'
+    LEFT_BRACE='{'
+    RIGHT_BRACE='}'
+    COMMA=','
   ]
 
 //  name(".*expr")='expression'
@@ -25,12 +52,12 @@
 
 wtfFile ::= package_declaration use_declaration*
 
-package_declaration ::= 'package' package_namespace ':' package_name ('@' package_version)?
+package_declaration ::= PACKAGE package_namespace ':' package_name ('@' package_version)?
 package_namespace ::= IDENTIFIER
 package_name ::= IDENTIFIER
 package_version ::= VERSION
 
-use_declaration ::= 'use' use_namespace ':' use_package '/' use_interface '.{' use_items '}'
+use_declaration ::= USE use_namespace ':' use_package '/' use_interface '.' '{' use_items '}'
 use_namespace ::= IDENTIFIER
 use_package ::= IDENTIFIER
 use_interface ::= IDENTIFIER

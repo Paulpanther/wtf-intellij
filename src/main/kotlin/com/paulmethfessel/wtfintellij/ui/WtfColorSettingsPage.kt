@@ -1,0 +1,270 @@
+package com.paulmethfessel.wtfintellij.ui
+
+import com.intellij.openapi.editor.colors.TextAttributesKey
+import com.intellij.openapi.options.colors.AttributesDescriptor
+import com.intellij.openapi.options.colors.ColorDescriptor
+import com.intellij.openapi.options.colors.ColorSettingsPage
+import com.paulmethfessel.wtfintellij.WtfSyntaxHighlighter
+
+class WtfColorSettingsPage : ColorSettingsPage {
+  companion object {
+    val descriptors = arrayOf(
+      AttributesDescriptor("Keyword", WtfSyntaxHighlighter.keywordAttrib)
+    )
+  }
+
+  override fun getAttributeDescriptors() = descriptors
+
+  override fun getColorDescriptors() = arrayOf<ColorDescriptor>()
+
+  override fun getDisplayName() = "WTF"
+
+  override fun getIcon() = MyIcons.lang
+
+  override fun getHighlighter() = WtfSyntaxHighlighter()
+
+  override fun getDemoText(): String {
+    return """
+      // Package declaration with namespace, package name, and version
+      package example:all_features@1.0.0;
+
+      // Use statements to import functions from other packages
+      use johndoe:math/math.{sqrt, pow}
+      use johndoe:io/printer.{print, println}
+
+      // Single-line comment explaining the purpose of the file
+      // This file demonstrates all features of the WTF language.
+
+      // Record definition with structural typing
+      record point {
+          x: f64
+          y: f64
+      }
+
+      // Resource definition with constructor and methods
+      resource counter {
+          value: s32
+
+          constructor(initial: s32) {
+              self.value = initial
+          }
+
+          func increment() {
+              self.value += 1
+          }
+
+          func get_value() -> s32 {
+              return self.value
+          }
+      }
+
+      // Enum definition
+      enum direction {
+          north
+          east
+          south
+          west
+      }
+
+      // Variant (sum type) definition with associated values
+      variant color {
+          rgb(r: s8, g: s8, b: s8)
+          grayscale(luminance: s8)
+      }
+
+      // Function that demonstrates variables and basic types
+      func demo_variables() {
+          // Immutable variable declaration using `let`
+          let immutable_number = 42
+
+          // Mutable variable declaration using `var`
+          var mutable_string = "Hello"
+
+          // Basic types usage
+          let integer_number: s32 = 42
+          let float_number: f64 = 3.14
+          let boolean_value: bool = true
+          let character: char = 'A'
+          let string_value: string = "Hello, WTF!"
+
+          // Creating an instance of a record
+          let origin = {
+              x: 0.0,
+              y: 0.0
+          }
+
+          // Accessing record fields
+          let x_coord = origin.x
+
+          // Using a resource
+          var counter = counter(0)
+          counter.increment()
+          let count = counter.get_value()
+          println("Counter value: " + count.to_string())
+      }
+
+      // Function that demonstrates control flow
+      func demo_control_flow() {
+          var counter = counter(2)
+
+          // If statement with else branch
+          if counter.value > 10 {
+              println("Counter is greater than 10")
+          } else {
+              println("Counter is less than or equal to 10")
+          }
+
+          // While loop with continue statement
+          while counter.value < 5 {
+              counter.increment()
+              if counter.value == 3 {
+                  continue  // Skip printing when value is 3
+              }
+              println("Counter in loop: " + counter.value.to_string())
+          }
+
+          // For loop with range and break statement
+          for i in 0..5 {
+              println("For loop iteration: " + i.to_string())
+              if i == 2 {
+                  break  // Exit the loop when i is 2
+              }
+          }
+      }
+
+      // Function that demonstrates functions and error handling
+      func demo_functions_and_errors() {
+          // Function call
+          let sum = add(5, 7)
+          println("Sum: " + sum.to_string())
+
+          // Option type with auto-wrapping
+          let optional_value: option<s32> = 42  // Automatically wrapped as `some(42)`
+
+          // Optional chaining to safely access methods
+          let value_string = optional_value?.to_string()
+          println("Optional value as string: " + (value_string ? "none"))
+
+          // Null-coalescing operator to provide a default value
+          let default_value = optional_value ? 5
+          println("Default value: " + default_value.to_string())
+
+          // Optional assignment operator
+          var maybe_value: s32?
+          maybe_value ?= 10  // Assigns 10 if maybe_value is none
+          println("Maybe value: " + (maybe_value?.to_string() ? "none"))
+
+          // Using the function with error propagation
+          let computation_result = compute(10, 2, 5)!
+          println("Computation result: " + computation_result.to_string())
+
+          // Handling errors using match statement
+          match compute(10, 0, 5) {
+              ok(let value) => println("Computation succeeded: " + value.to_string())
+              err(let error) => println("Computation failed: " + error)
+          }
+      }
+
+      // Function that demonstrates pattern matching
+      func demo_pattern_matching() {
+          let dir = east
+
+          // Match statement with patterns and variable binding
+          match dir {
+              north => println("Going north")
+              east => println("Going east")
+              let other => println("Going \(other)")
+          }
+
+          // Using variants and pattern matching
+          let red = rgb(255, 0, 0)
+          describe_color(red)
+          describe_color(Grayscale(128))
+      }
+
+      // Function that demonstrates string interpolation and operators
+      func demo_strings_and_operators() {
+          // String interpolation with optional value and default
+          func say_hello(name: string?) -> string {
+              "Hello, \(name ? "World")"
+          }
+
+          let greeting = say_hello(none)
+          println(greeting)  // Prints "Hello, World"
+
+          // Using string interpolation with format specifiers
+          let pi: f64 = 3.1415926535
+          let rough_pi = "Pi is roughly \(pi:.2f)"  // "Pi is roughly 3.14"
+          println(rough_pi)
+
+          // Using debug format specifier
+          let point = { x: 0.8, y: 1.0, z: 1.2 }
+          println("Point: \(point:#v)")  // Prints "Point: { x: 0.8, y: 1.0, z: 1.2 }"
+
+          // Using arithmetic operators
+          let total = 5 + 3 * 2 - 4 / 2  // total is 9
+          println("Total: " + total.to_string())
+
+          // Using comparison and logical operators
+          let boolean_value = true
+          if total == 9 && boolean_value {
+              println("Total is 9 and boolean_value is true")
+          }
+
+          // Using assignment operators
+          var number = 5
+          number += 2  // number is now 7
+          number -= 3  // number is now 4
+          number *= 2  // number is now 8
+          number /= 4  // number is now 2
+
+          // Using add operator to concat strings
+          let message = "Hello" + ", World!"
+          println(message)
+
+          // Safe access operator with optional resource
+          var optional_counter: counter? = counter(5)
+          let counter_value = optional_counter?.get_value()
+          println("Optional counter value: " + (counter_value?.to_string() ? "none"))
+
+          // Using a list with shorthand syntax
+          let number_list: [s32] = [1, 2, 3, 4, 5]
+          println("Number list: \(number_list:#v)")
+      }
+
+      // Function definitions for add, divide, compute, and describe_color
+
+      // Function declaration with parameters and return type
+      func add(a: s32, b: s32) -> s32 {
+          return a + b
+      }
+
+      // Function that returns a result type with error handling
+      func divide(a: s32, b: s32) -> result<s32, string> {
+          if b == 0 {
+              throw "Division by zero"
+          }
+          return a / b  // Automatically wrapped as `ok(a / b)`
+      }
+
+      // Function that uses error propagation with the `!` operator
+      func compute(a: s32, b: s32, c: s32) -> result<s32, string> {
+          let div = divide(a, b)!
+          let result = div + c
+          return result
+      }
+
+      // Function that uses advanced pattern matching with variants
+      func describe_color(color: color) {
+          match color {
+              rgb(let r, let g, let b) => println("Color RGB(\(r), \(g), \(b))")
+              grayscale(let luminance) => println("Grayscale color with luminance \(luminance)")
+          }
+      }
+    """.trimIndent()
+  }
+
+  override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>? {
+    return null
+  }
+}

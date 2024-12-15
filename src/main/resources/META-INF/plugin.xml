@@ -16,5 +16,10 @@
         <lang.parserDefinition
                 language="WTF"
                 implementationClass="com.paulmethfessel.wtfintellij.lang.WtfParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="WTF"
+                implementationClass="com.paulmethfessel.wtfintellij.WtfSyntaxHighlighterFactory"/>
+        <colorSettingsPage
+                implementation="com.paulmethfessel.wtfintellij.ui.WtfColorSettingsPage"/>
     </extensions>
 </idea-plugin>

@@ -1,4 +1,4 @@
-package com.paulmethfessel.wtfintellij
+package com.paulmethfessel.wtfintellij.ui
 
 import com.intellij.openapi.util.IconLoader
 

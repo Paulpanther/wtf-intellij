@@ -34,6 +34,31 @@ COMMENT="//".*
 <YYINITIAL> {
   {WHITE_SPACE}       { return WHITE_SPACE; }
 
+  "package"           { return PACKAGE; }
+  "use"               { return USE; }
+  "let"               { return LET; }
+  "var"               { return VAR; }
+  "record"            { return RECORD; }
+  "resource"          { return RESOURCE; }
+  "func"              { return FUNC; }
+  "enum"              { return ENUM; }
+  "variant"           { return VARIANT; }
+  "if"                { return IF; }
+  "else"              { return ELSE; }
+  "while"             { return WHILE; }
+  "for"               { return FOR; }
+  "in"                { return IN; }
+  "return"            { return RETURN; }
+  "match"             { return MATCH; }
+  "break"             { return BREAK; }
+  "continue"          { return CONTINUE; }
+  ":"                 { return COLON; }
+  "@"                 { return AT; }
+  "/"                 { return SLASH; }
+  "."                 { return DOT; }
+  "{"                 { return LEFT_BRACE; }
+  "}"                 { return RIGHT_BRACE; }
+  ","                 { return COMMA; }
 
   {WHITESPACE}        { return WHITESPACE; }
   {IDENTIFIER}        { return IDENTIFIER; }
