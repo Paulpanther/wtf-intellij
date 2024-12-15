@@ -1,0 +1,38 @@
+{
+  parserClass="com.paulmethfessel.wtfintellij.lang.WtfParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Wtf"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.paulmethfessel.wtfintellij.lang.psi"
+  psiImplPackage="com.paulmethfessel.wtfintellij.lang.psi.impl"
+
+  elementTypeHolderClass="com.paulmethfessel.wtfintellij.lang.psi.WtfTypes"
+  elementTypeClass="com.paulmethfessel.wtfintellij.lang.psi.WtfElementType"
+  tokenTypeClass="com.paulmethfessel.wtfintellij.lang.psi.WtfTokenType"
+
+  tokens=[
+    WHITESPACE='regexp:\s+'
+    IDENTIFIER='regexp:[_a-z][_a-zA-Z0-9]*'
+    VERSION='regexp:regexp:[a-z0-9][_a-zA-Z0-9-]*(\.[_a-zA-Z0-9-]+)*'
+    COMMENT='regexp://.*'
+  ]
+
+//  name(".*expr")='expression'
+//  extends(".*expr")=expr
+}
+
+wtfFile ::= package_declaration use_declaration*
+
+package_declaration ::= 'package' package_namespace ':' package_name ('@' package_version)?
+package_namespace ::= IDENTIFIER
+package_name ::= IDENTIFIER
+package_version ::= VERSION
+
+use_declaration ::= 'use' use_namespace ':' use_package '/' use_interface '.{' use_items '}'
+use_namespace ::= IDENTIFIER
+use_package ::= IDENTIFIER
+use_interface ::= IDENTIFIER
+private use_items ::= use_item (',' use_item)* {pin(".*")=1}
+use_item ::= IDENTIFIER

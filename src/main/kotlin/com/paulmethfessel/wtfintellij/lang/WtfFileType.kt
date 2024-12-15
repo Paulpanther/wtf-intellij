@@ -1,6 +1,7 @@
-package com.paulmethfessel.wtfintellij
+package com.paulmethfessel.wtfintellij.lang
 
 import com.intellij.openapi.fileTypes.LanguageFileType
+import com.paulmethfessel.wtfintellij.MyIcons
 
 class WtfFileType private constructor() : LanguageFileType(WtfLang.instance) {
   override fun getName() = "WTF"

@@ -1,4 +1,4 @@
-package com.paulmethfessel.wtfintellij
+package com.paulmethfessel.wtfintellij.lang
 
 import com.intellij.lang.Language
 
