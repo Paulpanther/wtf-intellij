@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright 2000-2024 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license. -->
+
+<svg
+   width="15"
+   height="15"
+   viewBox="0 0 15 15"
+   fill="none"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs5">
+    <rect
+       x="0"
+       y="0"
+       width="14.1255"
+       height="11"
+       id="rect6" />
+  </defs>
+  <path
+     d="M 7,0 C 3.1340139,0 0,3.1340139 0,7 0,9.757663 1.59459,12.142224 3.9121094,13.283203 V 7.9941406 H 7 V 8 h 6.929688 C 13.976387,7.6734003 14,7.3395197 14,7 14,3.1340139 10.865996,0 7,0 Z"
+     style="fill:#edf3ff"
+     id="path12" />
+  <path
+     d="M 7,0 C 3.1340139,0 0,3.1340139 0,7 0,9.831508 1.6828782,12.266675 4.1015625,13.369141 L 3.9628906,12.173828 C 2.1906285,11.131091 1,9.204964 1,7 1,3.6862933 3.6862933,1 7,1 c 3.313697,0 6,2.6862933 6,6 0,0.3407097 -0.02743,0.6747903 -0.08203,1 h 1.011719 C 13.976387,7.6734003 14,7.3395197 14,7 14,3.1340139 10.865996,0 7,0 Z"
+     style="fill:#3574f0"
+     id="path11" />
+  <path
+     d="M 7.1328125,3.5 C 5.2136144,3.5 3.7871094,4.993782 3.7871094,7 c 0,0.3488705 0.043657,0.6814199 0.125,0.9941406 l 1.0742187,0.00391 C 4.8833362,7.695873 4.8261719,7.3605187 4.8261719,7 c 0,-1.5034485 0.9675519,-2.5761719 2.3066406,-2.5761719 0.971689,0 1.7502634,0.5219839 2.0644535,1.2519531 h 1.013672 C 9.896738,4.3995425 8.621761,3.5 7.1328125,3.5 Z"
+     style="fill:#3574f0"
+     id="path10" />
+  <text
+     xml:space="preserve"
+     id="text5"
+     style="font-weight:bold;font-size:7px;line-height:1.3;font-family:Futura;-inkscape-font-specification:'Futura Bold';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6);fill:#db3b4b;fill-opacity:1;stroke-width:0.1"
+     transform="matrix(1,0,0,1.927457,1.9694824,2.9146026)"><tspan
+       x="0.91137695"
+       y="6.2701256"
+       id="tspan2"><tspan
+         style="font-size:5px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'"
+         id="tspan1">WTF</tspan></tspan></text>
+</svg>

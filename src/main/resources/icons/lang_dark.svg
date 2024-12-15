@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright 2000-2024 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license. -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   fill="none"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="lang_dark.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs5">
+    <rect
+       x="0"
+       y="0"
+       width="14.1255"
+       height="11"
+       id="rect6" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview5"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="21.101968"
+     inkscape:cx="6.6344522"
+     inkscape:cy="6.373813"
+     inkscape:window-width="1472"
+     inkscape:window-height="890"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5" />
+  <path
+     d="M 8,1 C 4.1340139,1 1,4.1340139 1,8 c 0,2.700944 1.5311159,5.041701 3.7714844,6.208984 L 4.0429687,8.9941406 7.0292969,9 H 14.929688 C 14.976387,8.6734003 15,8.3395197 15,8 15,4.1340139 11.865996,1 8,1 Z"
+     style="fill:#25324d"
+     id="path8" />
+  <path
+     d="M 8,1 C 4.1340139,1 1,4.1340139 1,8 c 0,2.700944 1.5311159,5.041701 3.7714844,6.208984 L 4.59375,12.9375 C 3.0278181,11.85485 2,10.047813 2,8 2,4.6862933 4.6862933,2 8,2 c 3.313697,0 6,2.6862933 6,6 0,0.3407097 -0.02743,0.6747903 -0.08203,1 h 1.011719 C 14.976387,8.6734003 15,8.3395197 15,8 15,4.1340139 11.865996,1 8,1 Z"
+     style="fill:#548af7"
+     id="path9" />
+  <path
+     d="M 8.1328125,4.5 C 6.2136144,4.5 4.7871094,5.993782 4.7871094,8 c 0,0.3517686 0.044295,0.686981 0.1269531,1.0019531 l 1.0742187,0.00195 C 5.8840263,8.7002391 5.8261719,8.3628146 5.8261719,8 c 0,-1.5034485 0.9675519,-2.5761719 2.3066406,-2.5761719 0.971689,0 1.7502634,0.5219839 2.0644535,1.2519531 h 1.013672 C 10.896738,5.3995425 9.621761,4.5 8.1328125,4.5 Z"
+     style="fill:#548af7"
+     id="path7" />
+  <text
+     xml:space="preserve"
+     id="text5"
+     style="font-weight:bold;font-size:7px;line-height:1.3;font-family:Futura;-inkscape-font-specification:'Futura Bold';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6);display:inline;fill:#db5c5c;fill-opacity:1;stroke-width:0.1"
+     transform="matrix(1,0,0,1.927457,2.9694824,3.9146025)"><tspan
+       x="0.91137695"
+       y="6.2701256"
+       id="tspan4"><tspan
+         style="font-size:5px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'"
+         id="tspan3">WTF</tspan></tspan></text>
+</svg>
