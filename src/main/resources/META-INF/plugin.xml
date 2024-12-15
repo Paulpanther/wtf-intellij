@@ -7,5 +7,10 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <fileType name="WTF file"
+                  implementationClass="com.paulmethfessel.wtfintellij.WtfFileType"
+                  fieldName="instance"
+                  language="WTF"
+                  extensions="wtf"/>
     </extensions>
 </idea-plugin>
