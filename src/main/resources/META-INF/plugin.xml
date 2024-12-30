@@ -21,5 +21,8 @@
                 implementationClass="com.paulmethfessel.wtfintellij.WtfSyntaxHighlighterFactory"/>
         <colorSettingsPage
                 implementation="com.paulmethfessel.wtfintellij.ui.WtfColorSettingsPage"/>
+        <lang.commenter
+                language="WTF"
+                implementationClass="com.paulmethfessel.wtfintellij.WtfCommenter"/>
     </extensions>
 </idea-plugin>
