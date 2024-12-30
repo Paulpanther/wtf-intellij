@@ -9,7 +9,10 @@ import com.paulmethfessel.wtfintellij.WtfSyntaxHighlighter
 class WtfColorSettingsPage : ColorSettingsPage {
   companion object {
     val descriptors = arrayOf(
-      AttributesDescriptor("Keyword", WtfSyntaxHighlighter.keywordAttrib)
+      AttributesDescriptor("Keyword", WtfSyntaxHighlighter.keywordAttrib),
+      AttributesDescriptor("Comment", WtfSyntaxHighlighter.commentAttrib),
+      AttributesDescriptor("Number", WtfSyntaxHighlighter.numberAttrib),
+      AttributesDescriptor("String", WtfSyntaxHighlighter.stringAttrib),
     )
   }
 

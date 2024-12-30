@@ -30,11 +30,17 @@ IDENTIFIER=[_a-z][_a-zA-Z0-9]*
 COMMENT="//".*
 INTEGER=[0-9]+
 FLOAT=([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)
-STRING_PART=(.*?)"/"(\"|\\\()
+
+%state STRING
+%state STRING_EXPR
 
 %%
-<YYINITIAL> {
-  {WHITESPACE}       { return WHITE_SPACE; }
+<YYINITIAL> ")"        { return RIGHT_PAREN; }
+<STRING_EXPR> ")"      { yybegin(STRING); return STRING_RIGHT_PAREN; }
+
+<YYINITIAL, STRING_EXPR> {
+  {NEW_LINE}          { return NEW_LINE; }
+  {WHITESPACE}        { return WHITE_SPACE; }
 
   "package"           { return PACKAGE; }
   "use"               { return USE; }
@@ -81,24 +87,21 @@ STRING_PART=(.*?)"/"(\"|\\\()
   ")"                 { return RIGHT_PAREN; }
   ","                 { return COMMA; }
   "->"                { return RIGHT_ARROW; }
-  "\""                { return QUOTE; }
   "'"                 { return SINGLE_QUOTE; }
   "\\"                { return BACK_SLASH; }
   "\\("               { return BACK_SLASH_PAREN; }
-  "LS"                { return LS; }
-  "GR"                { return GR; }
-  "PAREN_LEFT"        { return PAREN_LEFT; }
-  "PAREN_RIGHT"       { return PAREN_RIGHT; }
-  "expression"        { return EXPRESSION; }
 
-  {NEW_LINE}          { return NEW_LINE; }
-  {WHITESPACE}        { return WHITESPACE; }
   {IDENTIFIER}        { return IDENTIFIER; }
   {COMMENT}           { return COMMENT; }
   {INTEGER}           { return INTEGER; }
   {FLOAT}             { return FLOAT; }
-  {STRING_PART}       { return STRING_PART; }
+   "\""               { yybegin(STRING); return QUOTE; }
+}
 
+<STRING> {
+  "\\("                  { yybegin(STRING_EXPR); return STRING_LEFT_PAREN; }
+  "\""                 { yybegin(YYINITIAL); return QUOTE; }
+  [^\n\"]+/(\\\()?            { return STRING_CONTENT; }
 }
 
 [^] { return BAD_CHARACTER; }

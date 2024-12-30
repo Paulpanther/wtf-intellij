@@ -14,7 +14,10 @@ import com.paulmethfessel.wtfintellij.lang.psi.WtfTypes
 
 class WtfSyntaxHighlighter : SyntaxHighlighterBase() {
   companion object {
+    val commentAttrib = createTextAttributesKey("WTF_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
     val keywordAttrib = createTextAttributesKey("WTF_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
+    val numberAttrib = createTextAttributesKey("WTF_NUMBER", DefaultLanguageHighlighterColors.NUMBER)
+    val stringAttrib = createTextAttributesKey("WTF_STRING", DefaultLanguageHighlighterColors.STRING)
     val keywords = listOf(
       WtfTypes.USE,
       WtfTypes.PACKAGE,
@@ -40,10 +43,13 @@ class WtfSyntaxHighlighter : SyntaxHighlighterBase() {
   override fun getHighlightingLexer() = WtfLexerAdapter()
 
   override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
-    if (tokenType in keywords) {
-      return arrayOf(keywordAttrib)
+    return when (tokenType) {
+      in keywords -> arrayOf(keywordAttrib)
+      WtfTypes.COMMENT -> arrayOf(commentAttrib)
+      WtfTypes.INTEGER, WtfTypes.FLOAT -> arrayOf(numberAttrib)
+      WtfTypes.STRING_CONTENT, WtfTypes.QUOTE -> arrayOf(stringAttrib)
+      else -> emptyArray()
     }
-    return emptyArray()
   }
 }
 

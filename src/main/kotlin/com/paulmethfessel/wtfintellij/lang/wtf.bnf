@@ -74,7 +74,6 @@
 
         INTEGER='regexp:\d+'
         FLOAT='regexp:(\d+\.\d*)|(\d*\.\d+)'
-        STRING_PART='regexp:(.*?)/("|\\\()'
     ]
 
     extends(".*expr")=expr
@@ -141,7 +140,7 @@ expr ::= unary_expr | binary_expr | reference_expr | primary
 parenthesized_expr ::= '(' nl? expr nl? ')' {pin=1}
 
 binary_expr ::= expr binary_operator nl? expr
-private binary_operator ::= PLUS | MINUS | SLASH | STAR | AND | OR | LS | LE | GR | GE | EQUAL | NOT_EQUAL
+private binary_operator ::= PLUS | MINUS | SLASH | STAR | AND | OR | LT | LE | GT | GE | EQUAL | NOT_EQUAL
 
 unary_expr ::= unary_operator expr
 private unary_operator ::= PLUS | MINUS | EXCLAMETION
@@ -149,7 +148,7 @@ private unary_operator ::= PLUS | MINUS | EXCLAMETION
 reference_expr ::= initial_reference_expr (nl? DOT nl? (call_expr | IDENTIFIER))*
 private initial_reference_expr ::= variable | call_expr | parenthesized_expr
 
-call_expr ::= named_identifier nl? PAREN_LEFT nl? call_args nl? PAREN_RIGHT { rightAssociative=true }
+call_expr ::= named_identifier nl? LEFT_PAREN nl? call_args nl? RIGHT_PAREN { rightAssociative=true }
 private call_args ::= (expr nl? (COMMA nl? expr nl?)? COMMA?)?
 
 variable ::= IDENTIFIER {
@@ -164,6 +163,7 @@ literal_expr ::= INTEGER
     | TRUE
     | FALSE
 
-string ::= '"' STRING_PART? ('\(' expression ')' STRING_PART?)* '"'
+string ::= '"' (STRING_CONTENT | string_expression)* '"'
+string_expression ::= STRING_LEFT_PAREN expr STRING_RIGHT_PAREN
 
 named_identifier ::= IDENTIFIER
