@@ -1,65 +1,169 @@
 {
-  parserClass="com.paulmethfessel.wtfintellij.lang.WtfParser"
+    parserClass="com.paulmethfessel.wtfintellij.lang.WtfParser"
 
-  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
-  psiClassPrefix="Wtf"
-  psiImplClassSuffix="Impl"
-  psiPackage="com.paulmethfessel.wtfintellij.lang.psi"
-  psiImplPackage="com.paulmethfessel.wtfintellij.lang.psi.impl"
+    psiClassPrefix="Wtf"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.paulmethfessel.wtfintellij.lang.psi"
+    psiImplPackage="com.paulmethfessel.wtfintellij.lang.psi.impl"
 
-  elementTypeHolderClass="com.paulmethfessel.wtfintellij.lang.psi.WtfTypes"
-  elementTypeClass="com.paulmethfessel.wtfintellij.lang.psi.WtfElementType"
-  tokenTypeClass="com.paulmethfessel.wtfintellij.lang.psi.WtfTokenType"
+    elementTypeHolderClass="com.paulmethfessel.wtfintellij.lang.psi.WtfTypes"
+    elementTypeClass="com.paulmethfessel.wtfintellij.lang.psi.WtfElementType"
+    tokenTypeClass="com.paulmethfessel.wtfintellij.lang.psi.WtfTokenType"
 
-  tokens=[
-    WHITESPACE='regexp:\s+'
-    IDENTIFIER='regexp:[_a-z][_a-zA-Z0-9]*'
-    VERSION='regexp:regexp:[a-z0-9][_a-zA-Z0-9-]*(\.[_a-zA-Z0-9-]+)*'
-    COMMENT='regexp://.*'
+    tokens=[
 
-    PACKAGE='package'
-    USE='use'
-    LET='let'
-    VAR='var'
-    RECORD='record'
-    RESOURCE='resource'
-    FUNC='func'
-    ENUM='enum'
-    VARIANT='variant'
-    IF='if'
-    ELSE='else'
-    WHILE='while'
-    FOR='for'
-    IN='in'
-    RETURN='return'
-    MATCH='match'
-    BREAK='break'
-    CONTINUE='continue'
+        PACKAGE='package'
+        USE='use'
+        LET='let'
+        VAR='var'
+        RECORD='record'
+        RESOURCE='resource'
+        FUNC='func'
+        ENUM='enum'
+        VARIANT='variant'
+        IF='if'
+        ELSE='else'
+        WHILE='while'
+        FOR='for'
+        IN='in'
+        RETURN='return'
+        MATCH='match'
+        BREAK='break'
+        CONTINUE='continue'
+        CONSTRUCTOR='constructor'
+        TRUE='true'
+        FALSE='false'
 
-    COLON=':'
-    AT='@'
-    SLASH='/'
-    DOT='.'
-    LEFT_BRACE='{'
-    RIGHT_BRACE='}'
-    COMMA=','
-  ]
+        PLUS='+'
+        MINUS='-'
+        SLASH='/'
+        STAR='*'
+        AND='&&'
+        OR='||'
+        LT='<'
+        GT='>'
+        LE='<='
+        GE='>='
+        ASSIGN='='
+        EQUAL='=='
+        NOT_EQUAL='!='
+        EXCLAMETION='!'
+        QUESTION='?'
+        COLON=':'
+        AT='@'
+        DOT='.'
+        LEFT_BRACE='{'
+        RIGHT_BRACE='}'
+        LEFT_PAREN='('
+        RIGHT_PAREN=')'
+        COMMA=','
+        RIGHT_ARROW='->'
+        QUOTE='"'
+        SINGLE_QUOTE="'"
+        BACK_SLASH='\'
+        BACK_SLASH_PAREN='\('
 
-//  name(".*expr")='expression'
-//  extends(".*expr")=expr
+        NEW_LINE='regexp:\n'
+
+        WHITESPACE='regexp:[ \t]+'
+        IDENTIFIER='regexp:[_a-z][_a-zA-Z0-9]*'
+        //VERSION='regexp:[a-z0-9][_a-zA-Z0-9-]*(\.[_a-zA-Z0-9-]+)*'
+        COMMENT='regexp://.*'
+
+        INTEGER='regexp:\d+'
+        FLOAT='regexp:(\d+\.\d*)|(\d*\.\d+)'
+        STRING_PART='regexp:(.*?)/("|\\\()'
+    ]
+
+    extends(".*expr")=expr
+    extends(".*stmt")=stmt
 }
 
-wtfFile ::= package_declaration use_declaration*
+wtfFile ::= nl? package_declaration nl? (declaration (nl declaration)*)? nl?
+
+nl ::= NEW_LINE+
+
+// DECLARATIONS
+declaration ::= use_declaration | record_declaration | resource_declaration | enum_declaration | variant_declaration | func_declaration
 
 package_declaration ::= PACKAGE package_namespace ':' package_name ('@' package_version)?
 package_namespace ::= IDENTIFIER
 package_name ::= IDENTIFIER
-package_version ::= VERSION
+// TODO add VERSION to lexer again
+package_version ::= INTEGER
 
-use_declaration ::= USE use_namespace ':' use_package '/' use_interface '.' '{' use_items '}'
+use_declaration ::= USE use_namespace ':' use_package '/' use_interface '.' '{' nl? use_items nl? '}'
 use_namespace ::= IDENTIFIER
 use_package ::= IDENTIFIER
 use_interface ::= IDENTIFIER
-private use_items ::= use_item (',' use_item)* {pin(".*")=1}
+private use_items ::= use_item (nl? ',' nl? use_item)*
 use_item ::= IDENTIFIER
+
+record_declaration ::= RECORD IDENTIFIER nl? '{' nl? (typed_identifier (nl typed_identifier)*)? nl? '}'
+
+resource_declaration ::= RESOURCE IDENTIFIER nl? '{' nl? (resource_item (nl resource_item)*)? nl? '}'
+private resource_item ::= typed_identifier | resource_constructor | resource_method
+resource_constructor ::= CONSTRUCTOR nl? '(' func_arguments ')' nl? '{' func_body '}'
+resource_method ::= FUNC nl? IDENTIFIER nl? '(' func_arguments ')' nl? ('->' nl? IDENTIFIER)? nl? '{' func_body '}'
+
+enum_declaration ::= ENUM IDENTIFIER nl? '{' nl? (enum_value (nl enum_value)*)? nl? '}'
+enum_value ::= IDENTIFIER
+
+variant_declaration ::= VARIANT IDENTIFIER nl? '{' nl? (variant_value (nl variant_value)*)? nl? '}'
+variant_value ::= IDENTIFIER nl? '(' nl? (typed_identifier (nl? ',' nl? typed_identifier)*)? nl? ')'
+
+func_declaration ::= FUNC nl? IDENTIFIER nl? '(' func_arguments ')' nl? ('->' nl? IDENTIFIER)? nl? '{' func_body '}'
+
+typed_identifier ::= IDENTIFIER ':' IDENTIFIER
+
+private func_arguments ::= nl? (func_argument (',' func_argument)*)? nl?
+func_argument ::= typed_identifier
+
+// FUNCTION STATEMENTS / EXPRESSIONS
+func_body ::= nl? (stmt (nl stmt)*)? nl?
+
+stmt ::= variable_declaration_stmt | variable_assignment_stmt | call_stmt | return_stmt
+
+variable_declaration_stmt ::= (LET | VAR) nl? named_identifier nl? '=' nl? expr //{pin=1 recoverWhile=stmt_recover}
+
+variable_assignment_stmt ::= reference_expr nl? '=' nl? expr //{pin=3 recoverWhile=stmt_recover}
+
+call_stmt ::= call_expr
+
+return_stmt ::= RETURN expr //{pin=1 recoverWhile=stmt_recover}
+
+//private stmt_recover ::= !(LET | RETURN | NEW_LINE)
+
+expr ::= unary_expr | binary_expr | reference_expr | primary
+
+parenthesized_expr ::= '(' nl? expr nl? ')' {pin=1}
+
+binary_expr ::= expr binary_operator nl? expr
+private binary_operator ::= PLUS | MINUS | SLASH | STAR | AND | OR | LS | LE | GR | GE | EQUAL | NOT_EQUAL
+
+unary_expr ::= unary_operator expr
+private unary_operator ::= PLUS | MINUS | EXCLAMETION
+
+reference_expr ::= initial_reference_expr (nl? DOT nl? (call_expr | IDENTIFIER))*
+private initial_reference_expr ::= variable | call_expr | parenthesized_expr
+
+call_expr ::= named_identifier nl? PAREN_LEFT nl? call_args nl? PAREN_RIGHT { rightAssociative=true }
+private call_args ::= (expr nl? (COMMA nl? expr nl?)? COMMA?)?
+
+variable ::= IDENTIFIER {
+    methods=[getReferences]
+}
+
+private primary ::= literal_expr
+
+literal_expr ::= INTEGER
+    | FLOAT
+    | string
+    | TRUE
+    | FALSE
+
+string ::= '"' STRING_PART? ('\(' expression ')' STRING_PART?)* '"'
+
+named_identifier ::= IDENTIFIER
