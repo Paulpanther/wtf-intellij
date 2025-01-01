@@ -8,7 +8,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
-                name="WTF file"
+                name="WTF"
                 implementationClass="com.paulmethfessel.wtfintellij.lang.WtfFileType"
                 fieldName="instance"
                 language="WTF"
@@ -27,5 +27,10 @@
         <annotator
                 language="WTF"
                 implementationClass="com.paulmethfessel.wtfintellij.WtfDumbAnnotator"/>
+        <iconProvider
+                implementation="com.paulmethfessel.wtfintellij.ui.WtfIconProvider"/>
+        <lang.psiStructureViewFactory
+                language="WTF"
+                implementationClass="com.paulmethfessel.wtfintellij.WtfStructureViewFactory"/>
     </extensions>
 </idea-plugin>
