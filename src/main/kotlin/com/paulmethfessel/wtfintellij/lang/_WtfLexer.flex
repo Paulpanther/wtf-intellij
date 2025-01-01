@@ -101,7 +101,7 @@ FLOAT=([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)
 <STRING> {
   "\\("               { yybegin(STRING_EXPR); return STRING_LEFT_PAREN; }
   "\""                { yybegin(YYINITIAL); return QUOTE; }
-  [^\n\"]+/(\\\()?    { return STRING_CONTENT; }
+  [^\n\"\\]+          { return STRING_CONTENT; }
 }
 
 [^] { return BAD_CHARACTER; }
