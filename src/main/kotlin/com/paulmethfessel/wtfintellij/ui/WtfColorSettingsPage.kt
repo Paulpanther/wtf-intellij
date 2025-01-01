@@ -9,10 +9,25 @@ import com.paulmethfessel.wtfintellij.WtfSyntaxHighlighter
 class WtfColorSettingsPage : ColorSettingsPage {
   companion object {
     val descriptors = arrayOf(
-      AttributesDescriptor("Keyword", WtfSyntaxHighlighter.keywordAttrib),
-      AttributesDescriptor("Comment", WtfSyntaxHighlighter.commentAttrib),
-      AttributesDescriptor("Number", WtfSyntaxHighlighter.numberAttrib),
-      AttributesDescriptor("String", WtfSyntaxHighlighter.stringAttrib),
+      AttributesDescriptor("Keyword", WtfSyntaxHighlighter.keyword),
+      AttributesDescriptor("Comment", WtfSyntaxHighlighter.comment),
+      AttributesDescriptor("Number", WtfSyntaxHighlighter.number),
+      AttributesDescriptor("String", WtfSyntaxHighlighter.string),
+      AttributesDescriptor("Dot", WtfSyntaxHighlighter.dot),
+      AttributesDescriptor("Comma", WtfSyntaxHighlighter.comma),
+      AttributesDescriptor("Parenthesis", WtfSyntaxHighlighter.parenthesis),
+      AttributesDescriptor("Braces", WtfSyntaxHighlighter.braces),
+      AttributesDescriptor("Arrow", WtfSyntaxHighlighter.arrow),
+      AttributesDescriptor("Colon", WtfSyntaxHighlighter.colon),
+      AttributesDescriptor("Version sign", WtfSyntaxHighlighter.versionSign),
+      AttributesDescriptor("Operator sign", WtfSyntaxHighlighter.operatorSign),
+      AttributesDescriptor("String template parenthesis", WtfSyntaxHighlighter.stringTemplateParenthesis),
+
+      AttributesDescriptor("Function declaration", WtfSyntaxHighlighter.funcDeclarationAttrib),
+      AttributesDescriptor("Variant", WtfSyntaxHighlighter.variantAttrib),
+      AttributesDescriptor("Enum", WtfSyntaxHighlighter.enumAttrib),
+      AttributesDescriptor("Resource", WtfSyntaxHighlighter.resourceAttrib),
+      AttributesDescriptor("Record", WtfSyntaxHighlighter.recordAttrib),
     )
   }
 

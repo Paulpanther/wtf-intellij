@@ -14,6 +14,7 @@
 
     psiImplUtilClass="com.paulmethfessel.wtfintellij.lang.WtfPsiImplUtil"
 
+    // Tokens are only used for Live Preview, for plugin use .flex file. Don't regenerate it from the bnf (it has custom logic)
     tokens=[
         PACKAGE='package'
         USE='use'
@@ -102,24 +103,24 @@ private use_items ::= use_item (nl? ',' nl? use_item)*
 use_item ::= IDENTIFIER
 
 record_declaration ::= RECORD record_name nl? '{' nl? (typed_identifier (nl typed_identifier)*)? nl? '}'
-record_name ::= declared_identifier
+record_name ::= IDENTIFIER
 
 resource_declaration ::= RESOURCE resource_name nl? '{' nl? (resource_item (nl resource_item)*)? nl? '}'
 private resource_item ::= typed_identifier | resource_constructor | resource_method
 resource_constructor ::= CONSTRUCTOR nl? '(' func_arguments ')' nl? '{' func_body '}'
 resource_method ::= FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
-resource_name ::= declared_identifier
+resource_name ::= IDENTIFIER
 
 enum_declaration ::= ENUM enum_name nl? '{' nl? (enum_value (nl enum_value)*)? nl? '}'
-enum_name ::= declared_identifier
+enum_name ::= IDENTIFIER
 enum_value ::= IDENTIFIER
 
 variant_declaration ::= VARIANT variant_name nl? '{' nl? (variant_value (nl variant_value)*)? nl? '}'
-variant_name ::= declared_identifier
+variant_name ::= IDENTIFIER
 variant_value ::= IDENTIFIER nl? '(' nl? (typed_identifier (nl? ',' nl? typed_identifier)*)? nl? ')'
 
 func_declaration ::= FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
-function_name ::= declared_identifier
+function_name ::= IDENTIFIER
 
 typed_identifier ::= named_identifier ':' type_identifier
 
@@ -179,5 +180,3 @@ named_identifier ::= IDENTIFIER {
 }
 
 type_identifier ::= IDENTIFIER
-
-declared_identifier ::= IDENTIFIER
