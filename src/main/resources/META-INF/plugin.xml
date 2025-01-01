@@ -24,5 +24,8 @@
         <lang.commenter
                 language="WTF"
                 implementationClass="com.paulmethfessel.wtfintellij.WtfCommenter"/>
+        <annotator
+                language="WTF"
+                implementationClass="com.paulmethfessel.wtfintellij.WtfDumbAnnotator"/>
     </extensions>
 </idea-plugin>
