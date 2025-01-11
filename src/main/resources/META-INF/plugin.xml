@@ -34,5 +34,8 @@
                 implementationClass="com.paulmethfessel.wtfintellij.editor.WtfStructureViewFactory"/>
         <configurationType
                 implementation="com.paulmethfessel.wtfintellij.run.WtfConfigurationType"/>
+        <lang.braceMatcher
+                implementationClass="com.paulmethfessel.wtfintellij.editor.WtfPairedBraceMatcher"
+                language="WTF"/>
     </extensions>
 </idea-plugin>
