@@ -37,5 +37,8 @@
         <lang.braceMatcher
                 implementationClass="com.paulmethfessel.wtfintellij.editor.WtfPairedBraceMatcher"
                 language="WTF"/>
+        <lang.foldingBuilder
+                implementationClass="com.paulmethfessel.wtfintellij.editor.WtfUseFoldingBuilder"
+                language="WTF"/>
     </extensions>
 </idea-plugin>
