@@ -1,4 +1,4 @@
-package com.paulmethfessel.wtfintellij
+package com.paulmethfessel.wtfintellij.editor
 
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey

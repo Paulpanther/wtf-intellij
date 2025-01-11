@@ -1,4 +1,4 @@
-package com.paulmethfessel.wtfintellij
+package com.paulmethfessel.wtfintellij.editor
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator

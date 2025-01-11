@@ -1,4 +1,4 @@
-package com.paulmethfessel.wtfintellij
+package com.paulmethfessel.wtfintellij.editor
 
 import com.intellij.ide.structureView.StructureViewBuilder
 import com.intellij.ide.structureView.StructureViewModel

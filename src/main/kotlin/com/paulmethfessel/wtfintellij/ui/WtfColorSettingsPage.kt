@@ -4,7 +4,7 @@ import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.options.colors.AttributesDescriptor
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
-import com.paulmethfessel.wtfintellij.WtfSyntaxHighlighter
+import com.paulmethfessel.wtfintellij.editor.WtfSyntaxHighlighter
 
 class WtfColorSettingsPage : ColorSettingsPage {
   companion object {

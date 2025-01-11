@@ -18,19 +18,21 @@
                 implementationClass="com.paulmethfessel.wtfintellij.lang.WtfParserDefinition"/>
         <lang.syntaxHighlighterFactory
                 language="WTF"
-                implementationClass="com.paulmethfessel.wtfintellij.WtfSyntaxHighlighterFactory"/>
+                implementationClass="com.paulmethfessel.wtfintellij.editor.WtfSyntaxHighlighterFactory"/>
         <colorSettingsPage
                 implementation="com.paulmethfessel.wtfintellij.ui.WtfColorSettingsPage"/>
         <lang.commenter
                 language="WTF"
-                implementationClass="com.paulmethfessel.wtfintellij.WtfCommenter"/>
+                implementationClass="com.paulmethfessel.wtfintellij.editor.WtfCommenter"/>
         <annotator
                 language="WTF"
-                implementationClass="com.paulmethfessel.wtfintellij.WtfDumbAnnotator"/>
+                implementationClass="com.paulmethfessel.wtfintellij.editor.WtfDumbAnnotator"/>
         <iconProvider
                 implementation="com.paulmethfessel.wtfintellij.ui.WtfIconProvider"/>
         <lang.psiStructureViewFactory
                 language="WTF"
-                implementationClass="com.paulmethfessel.wtfintellij.WtfStructureViewFactory"/>
+                implementationClass="com.paulmethfessel.wtfintellij.editor.WtfStructureViewFactory"/>
+        <configurationType
+                implementation="com.paulmethfessel.wtfintellij.run.WtfConfigurationType"/>
     </extensions>
 </idea-plugin>
