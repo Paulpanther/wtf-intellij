@@ -40,5 +40,7 @@
         <lang.foldingBuilder
                 implementationClass="com.paulmethfessel.wtfintellij.editor.WtfUseFoldingBuilder"
                 language="WTF"/>
+        <breadcrumbsInfoProvider
+                implementation="com.paulmethfessel.wtfintellij.editor.WtfBreadcrumbsProvider"/>
     </extensions>
 </idea-plugin>
