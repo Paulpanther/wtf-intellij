@@ -4,8 +4,10 @@ import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.impl.source.tree.LeafPsiElement
+import com.paulmethfessel.wtfintellij.lang.psi.WtfFunctionCallName
 import com.paulmethfessel.wtfintellij.lang.psi.WtfNamedIdentifier
 import com.paulmethfessel.wtfintellij.lang.psi.WtfVariable
+import com.paulmethfessel.wtfintellij.lang.refs.WtfFunctionReference
 import com.paulmethfessel.wtfintellij.lang.refs.WtfParameterReference
 import javax.swing.Icon
 
@@ -30,6 +32,7 @@ object WtfPsiImplUtil {
   fun getReferences(variable: PsiElement): Array<PsiReferenceBase<PsiElement>> {
     return when (variable) {
       is WtfVariable -> arrayOf(WtfParameterReference(variable))
+      is WtfFunctionCallName -> arrayOf(WtfFunctionReference(variable))
       else -> arrayOf()
     }
   }

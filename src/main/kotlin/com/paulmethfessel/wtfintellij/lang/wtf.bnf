@@ -102,22 +102,24 @@ use_interface ::= IDENTIFIER
 private use_items ::= use_item (nl? ',' nl? use_item)*
 use_item ::= IDENTIFIER
 
-record_declaration ::= RECORD record_name nl? '{' nl? (typed_identifier (nl typed_identifier)*)? nl? '}'
+record_declaration ::= RECORD record_name nl? '{' nl? (record_field (nl record_field)*)? nl? '}'
 record_name ::= named_identifier
+record_field ::= typed_identifier
 
 resource_declaration ::= RESOURCE resource_name nl? '{' nl? (resource_item (nl resource_item)*)? nl? '}'
-private resource_item ::= typed_identifier | resource_constructor | resource_method
+private resource_item ::= resource_field | resource_constructor | resource_method
+resource_field ::= typed_identifier
 resource_constructor ::= CONSTRUCTOR nl? '(' func_arguments ')' nl? '{' func_body '}'
 resource_method ::= FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
 resource_name ::= named_identifier
 
 enum_declaration ::= ENUM enum_name nl? '{' nl? (enum_value (nl enum_value)*)? nl? '}'
 enum_name ::= named_identifier
-enum_value ::= IDENTIFIER
+enum_value ::= named_identifier
 
 variant_declaration ::= VARIANT variant_name nl? '{' nl? (variant_value (nl variant_value)*)? nl? '}'
 variant_name ::= named_identifier
-variant_value ::= IDENTIFIER nl? '(' nl? (typed_identifier (nl? ',' nl? typed_identifier)*)? nl? ')'
+variant_value ::= named_identifier nl? '(' nl? (typed_identifier (nl? ',' nl? typed_identifier)*)? nl? ')'
 
 func_declaration ::= FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
 function_name ::= named_identifier
@@ -153,10 +155,20 @@ unary_expr ::= unary_operator expr
 private unary_operator ::= PLUS | MINUS | EXCLAMETION
 
 reference_expr ::= initial_reference_expr (nl? DOT nl? (call_expr | IDENTIFIER))*
-private initial_reference_expr ::= variable | call_expr | parenthesized_expr
+private initial_reference_expr ::= call_expr | constructor_expr | variable | parenthesized_expr
 
-call_expr ::= named_identifier nl? LEFT_PAREN nl? call_args nl? RIGHT_PAREN { rightAssociative=true }
+call_expr ::= function_call_name nl? '(' nl? call_args nl? ')' { rightAssociative=true }
+function_call_name ::= IDENTIFIER {
+    methods=[getReferences]
+}
 private call_args ::= (expr nl? (COMMA nl? expr nl?)? COMMA?)?
+
+constructor_expr ::= named_identifier nl? '{' nl? constructor_args nl? '}'
+private constructor_args ::= (constructor_argument nl? (COMMA nl? constructor_argument nl?)*)?
+constructor_argument ::= constructor_argument_name ':' expr
+constructor_argument_name ::= IDENTIFIER {
+    methods=[getReferences]
+}
 
 variable ::= IDENTIFIER {
     methods=[getReferences]
