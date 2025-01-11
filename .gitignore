@@ -4,6 +4,5 @@
 .qodana
 build
 
-src/main/gen
 idea-flex.skeleton
 jflex-1.9.1.jar
