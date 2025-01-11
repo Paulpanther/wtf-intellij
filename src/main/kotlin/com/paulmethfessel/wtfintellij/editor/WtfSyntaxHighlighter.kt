@@ -37,6 +37,7 @@ class WtfSyntaxHighlighter : SyntaxHighlighterBase() {
       MATCH,
       BREAK,
       CONTINUE,
+      EXPORT
     )
     val dot = createTextAttributesKey("WTF_DOT", DefaultLanguageHighlighterColors.DOT)
     val comma = createTextAttributesKey("WTF_COMMA", DefaultLanguageHighlighterColors.COMMA)

@@ -61,6 +61,7 @@ FLOAT=([0-9]+\.[0-9]*)|([0-9]*\.[0-9]+)
   "break"             { return BREAK; }
   "continue"          { return CONTINUE; }
   "constructor"       { return CONSTRUCTOR; }
+  "export"            { return EXPORT; }
   "true"              { return TRUE; }
   "false"             { return FALSE; }
   "+"                 { return PLUS; }

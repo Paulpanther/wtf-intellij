@@ -35,6 +35,7 @@
         BREAK='break'
         CONTINUE='continue'
         CONSTRUCTOR='constructor'
+        EXPORT='export'
         TRUE='true'
         FALSE='false'
 
@@ -102,26 +103,26 @@ use_interface ::= IDENTIFIER
 private use_items ::= use_item (nl? ',' nl? use_item)*
 use_item ::= IDENTIFIER
 
-record_declaration ::= RECORD record_name nl? '{' nl? (record_field (nl record_field)*)? nl? '}'
+record_declaration ::= EXPORT? RECORD record_name nl? '{' nl? (record_field (nl record_field)*)? nl? '}'
 record_name ::= named_identifier
 record_field ::= typed_identifier
 
-resource_declaration ::= RESOURCE resource_name nl? '{' nl? (resource_item (nl resource_item)*)? nl? '}'
+resource_declaration ::= EXPORT? RESOURCE resource_name nl? '{' nl? (resource_item (nl resource_item)*)? nl? '}'
 private resource_item ::= resource_field | resource_constructor | resource_method
 resource_field ::= typed_identifier
 resource_constructor ::= CONSTRUCTOR nl? '(' func_arguments ')' nl? '{' func_body '}'
 resource_method ::= FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
 resource_name ::= named_identifier
 
-enum_declaration ::= ENUM enum_name nl? '{' nl? (enum_value (nl enum_value)*)? nl? '}'
+enum_declaration ::= EXPORT? ENUM enum_name nl? '{' nl? (enum_value (nl enum_value)*)? nl? '}'
 enum_name ::= named_identifier
 enum_value ::= named_identifier
 
-variant_declaration ::= VARIANT variant_name nl? '{' nl? (variant_value (nl variant_value)*)? nl? '}'
+variant_declaration ::= EXPORT? VARIANT variant_name nl? '{' nl? (variant_value (nl variant_value)*)? nl? '}'
 variant_name ::= named_identifier
 variant_value ::= named_identifier nl? '(' nl? (typed_identifier (nl? ',' nl? typed_identifier)*)? nl? ')'
 
-func_declaration ::= FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
+func_declaration ::= EXPORT? FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
 function_name ::= named_identifier
 
 typed_identifier ::= named_identifier ':' type_identifier
