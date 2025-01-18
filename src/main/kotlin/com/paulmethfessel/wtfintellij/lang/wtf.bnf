@@ -103,29 +103,60 @@ use_interface ::= IDENTIFIER
 private use_items ::= use_item (nl? ',' nl? use_item)*
 use_item ::= IDENTIFIER
 
-record_declaration ::= EXPORT? RECORD record_name nl? '{' nl? (record_field (nl record_field)*)? nl? '}'
-record_name ::= named_identifier
+record_declaration ::= EXPORT? RECORD IDENTIFIER nl? '{' nl? (record_field (nl record_field)*)? nl? '}' {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 record_field ::= typed_identifier
 
-resource_declaration ::= EXPORT? RESOURCE resource_name nl? '{' nl? (resource_item (nl resource_item)*)? nl? '}'
+resource_declaration ::= EXPORT? RESOURCE IDENTIFIER nl? '{' nl? (resource_item (nl resource_item)*)? nl? '}' {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 private resource_item ::= resource_field | resource_constructor | resource_method
 resource_field ::= typed_identifier
 resource_constructor ::= CONSTRUCTOR nl? '(' func_arguments ')' nl? '{' func_body '}'
-resource_method ::= FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
-resource_name ::= named_identifier
+resource_method ::= FUNC nl? IDENTIFIER nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}' {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 
-enum_declaration ::= EXPORT? ENUM enum_name nl? '{' nl? (enum_value (nl enum_value)*)? nl? '}'
-enum_name ::= named_identifier
-enum_value ::= named_identifier
+enum_declaration ::= EXPORT? ENUM IDENTIFIER nl? '{' nl? (enum_value (nl enum_value)*)? nl? '}' {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
+enum_value ::= IDENTIFIER {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 
-variant_declaration ::= EXPORT? VARIANT variant_name nl? '{' nl? (variant_value (nl variant_value)*)? nl? '}'
-variant_name ::= named_identifier
-variant_value ::= named_identifier nl? '(' nl? (typed_identifier (nl? ',' nl? typed_identifier)*)? nl? ')'
+variant_declaration ::= EXPORT? VARIANT IDENTIFIER nl? '{' nl? (variant_value (nl variant_value)*)? nl? '}' {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
+variant_value ::= IDENTIFIER nl? '(' nl? (typed_identifier (nl? ',' nl? typed_identifier)*)? nl? ')' {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 
-func_declaration ::= EXPORT? FUNC nl? function_name nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}'
-function_name ::= named_identifier
+func_declaration ::= EXPORT? FUNC nl? IDENTIFIER nl? '(' func_arguments ')' nl? ('->' nl? type_identifier)? nl? '{' func_body '}' {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 
-typed_identifier ::= named_identifier ':' type_identifier
+typed_identifier ::= IDENTIFIER ':' type_identifier {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 
 private func_arguments ::= nl? (func_argument (',' func_argument)*)? nl?
 func_argument ::= typed_identifier
@@ -135,7 +166,11 @@ func_body ::= nl? (stmt (nl stmt)*)? nl?
 
 stmt ::= variable_declaration_stmt | variable_assignment_stmt | call_stmt | return_stmt
 
-variable_declaration_stmt ::= (LET | VAR) nl? named_identifier nl? '=' nl? expr //{pin=1 recoverWhile=stmt_recover}
+variable_declaration_stmt ::= (LET | VAR) nl? IDENTIFIER nl? '=' nl? expr { //{pin=1 recoverWhile=stmt_recover}
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 
 variable_assignment_stmt ::= reference_expr nl? '=' nl? expr //{pin=3 recoverWhile=stmt_recover}
 
@@ -164,7 +199,11 @@ function_call_name ::= IDENTIFIER {
 }
 private call_args ::= (expr nl? (COMMA nl? expr nl?)? COMMA?)?
 
-constructor_expr ::= named_identifier nl? '{' nl? constructor_args nl? '}'
+constructor_expr ::= IDENTIFIER nl? '{' nl? constructor_args nl? '}' {
+    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
+    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
+    methods=[getNameIdentifier]
+}
 private constructor_args ::= (constructor_argument nl? (COMMA nl? constructor_argument nl?)*)?
 constructor_argument ::= constructor_argument_name ':' expr
 constructor_argument_name ::= IDENTIFIER {
@@ -185,11 +224,5 @@ literal_expr ::= INTEGER
 
 string ::= '"' (STRING_CONTENT | string_expression)* '"'
 string_expression ::= STRING_LEFT_PAREN expr STRING_RIGHT_PAREN
-
-named_identifier ::= IDENTIFIER {
-    mixin="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl"
-    implements="com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElement"
-    methods=[getName setName getNameIdentifier getPresentation]
-}
 
 type_identifier ::= IDENTIFIER

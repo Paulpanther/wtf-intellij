@@ -14,20 +14,15 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.childrenOfType
 import com.paulmethfessel.wtfintellij.lang.psi.WtfEnumDeclaration
-import com.paulmethfessel.wtfintellij.lang.psi.WtfEnumName
 import com.paulmethfessel.wtfintellij.lang.psi.WtfEnumValue
 import com.paulmethfessel.wtfintellij.lang.psi.WtfFile
 import com.paulmethfessel.wtfintellij.lang.psi.WtfFuncDeclaration
-import com.paulmethfessel.wtfintellij.lang.psi.WtfFunctionName
 import com.paulmethfessel.wtfintellij.lang.psi.WtfNamedElementImpl
 import com.paulmethfessel.wtfintellij.lang.psi.WtfRecordDeclaration
 import com.paulmethfessel.wtfintellij.lang.psi.WtfRecordField
-import com.paulmethfessel.wtfintellij.lang.psi.WtfRecordName
 import com.paulmethfessel.wtfintellij.lang.psi.WtfResourceDeclaration
 import com.paulmethfessel.wtfintellij.lang.psi.WtfResourceField
-import com.paulmethfessel.wtfintellij.lang.psi.WtfResourceName
 import com.paulmethfessel.wtfintellij.lang.psi.WtfVariantDeclaration
-import com.paulmethfessel.wtfintellij.lang.psi.WtfVariantName
 import com.paulmethfessel.wtfintellij.lang.psi.WtfVariantValue
 
 class WtfStructureViewModel(editor: Editor?, psiFile: PsiFile) :
@@ -35,14 +30,14 @@ class WtfStructureViewModel(editor: Editor?, psiFile: PsiFile) :
   StructureViewModel.ElementInfoProvider {
 
   override fun isAlwaysShowsPlus(element: StructureViewTreeElement?): Boolean {
-    return element?.value is WtfRecordName
-        || element?.value is WtfResourceName
-        || element?.value is WtfEnumName
-        || element?.value is WtfVariantName
+    return element?.value is WtfRecordDeclaration
+        || element?.value is WtfResourceDeclaration
+        || element?.value is WtfEnumDeclaration
+        || element?.value is WtfVariantDeclaration
   }
 
   override fun isAlwaysLeaf(element: StructureViewTreeElement?): Boolean {
-    return element?.value is WtfFunctionName
+    return element?.value is WtfFuncDeclaration
         || element?.value is WtfRecordField
         || element?.value is WtfEnumValue
         || element?.value is WtfVariantValue
@@ -55,11 +50,11 @@ class WtfStructureViewModel(editor: Editor?, psiFile: PsiFile) :
 
   override fun getSuitableClasses(): Array<Class<out PsiElement>> {
     return arrayOf(
-      WtfFunctionName::class.java,
-      WtfRecordName::class.java,
-      WtfEnumName::class.java,
-      WtfResourceName::class.java,
-      WtfVariantName::class.java,
+      WtfFuncDeclaration::class.java,
+      WtfRecordDeclaration::class.java,
+      WtfEnumDeclaration::class.java,
+      WtfResourceDeclaration::class.java,
+      WtfVariantDeclaration::class.java,
       WtfRecordField::class.java,
       WtfEnumValue::class.java,
       WtfVariantValue::class.java,
@@ -94,33 +89,28 @@ class WtfStructureViewElement(
   }
 
   override fun getChildren(): Array<TreeElement> {
-    if (element is WtfFile) {
-      val records = element.childrenOfType<WtfRecordDeclaration>().map { it.recordName }
-      val resources = element.childrenOfType<WtfResourceDeclaration>().map { it.resourceName }
-      val functions = element.childrenOfType<WtfFuncDeclaration>().map { it.functionName }
-      val enums = element.childrenOfType<WtfEnumDeclaration>().map { it.enumName }
-      val variants = element.childrenOfType<WtfVariantDeclaration>().map { it.variantName }
-      val psiElements = records + resources + functions + enums + variants
-      return psiElements.map { WtfStructureViewElement(it as WtfNamedElementImpl) }.toTypedArray()
-    } else if (element is WtfRecordName) {
+    val elements = if (element is WtfFile) {
+      val records = element.childrenOfType<WtfRecordDeclaration>()
+      val resources = element.childrenOfType<WtfResourceDeclaration>()
+      val functions = element.childrenOfType<WtfFuncDeclaration>()
+      val enums = element.childrenOfType<WtfEnumDeclaration>()
+      val variants = element.childrenOfType<WtfVariantDeclaration>()
+      records + resources + functions + enums + variants
+    } else if (element is WtfRecordDeclaration) {
+      element.recordFieldList.map { it.typedIdentifier }
+    } else if (element is WtfEnumDeclaration) {
+      element.enumValueList
+    } else if (element is WtfVariantDeclaration) {
+      element.variantValueList
+    } else if (element is WtfResourceDeclaration) {
       val fields =
-        ((element as WtfRecordName).parent as WtfRecordDeclaration).recordFieldList.map { it.typedIdentifier.namedIdentifier }
-      return fields.map { WtfStructureViewElement(it as WtfNamedElementImpl) }.toTypedArray()
-    } else if (element is WtfEnumName) {
-      val fields =
-        ((element as WtfEnumName).parent as WtfEnumDeclaration).enumValueList.map { it.namedIdentifier }
-      return fields.map { WtfStructureViewElement(it as WtfNamedElementImpl) }.toTypedArray()
-    } else if (element is WtfVariantName) {
-      val fields =
-        ((element as WtfVariantName).parent as WtfVariantDeclaration).variantValueList.map { it.namedIdentifier }
-      return fields.map { WtfStructureViewElement(it as WtfNamedElementImpl) }.toTypedArray()
-    } else if (element is WtfResourceName) {
-      val fields =
-        ((element as WtfResourceName).parent as WtfResourceDeclaration).resourceFieldList.map { it.typedIdentifier.namedIdentifier }
+        element.resourceFieldList.map { it.typedIdentifier }
       val methods =
-        ((element as WtfResourceName).parent as WtfResourceDeclaration).resourceMethodList.map { it.functionName.namedIdentifier }
-      return (methods + fields).map { WtfStructureViewElement(it as WtfNamedElementImpl) }.toTypedArray()
+        element.resourceMethodList
+      fields + methods
+    } else {
+      listOf()
     }
-    return arrayOf()
+    return elements.map { WtfStructureViewElement(it as WtfNamedElementImpl) }.toTypedArray()
   }
 }

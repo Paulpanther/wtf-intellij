@@ -12,8 +12,8 @@ class WtfParameterReference(variable: WtfVariable) : PsiReferenceBase<PsiElement
     val func = element.parentOfType<WtfFuncDeclaration>() ?: return null
     return func
       .funcArgumentList
-      .find { it.typedIdentifier.namedIdentifier.text == element.text }
-      ?.typedIdentifier?.namedIdentifier
+      .find { it.typedIdentifier.name == element.text }
+      ?.typedIdentifier?.nameIdentifier
   }
 
   override fun getRangeInElement() = TextRange(0, myElement.textLength)

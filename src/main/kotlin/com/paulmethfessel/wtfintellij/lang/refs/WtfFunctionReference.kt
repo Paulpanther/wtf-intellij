@@ -11,8 +11,8 @@ class WtfFunctionReference(element: WtfFunctionCallName) : PsiReferenceBase<PsiE
   override fun resolve(): PsiElement? {
     val func = element.containingFile
       .childrenOfType<WtfFuncDeclaration>()
-      .find { it.functionName.text == element.text }
-    return func?.functionName
+      .find { it.name == element.text }
+    return func?.nameIdentifier
   }
 
   override fun getRangeInElement() = TextRange(0, myElement.textLength)

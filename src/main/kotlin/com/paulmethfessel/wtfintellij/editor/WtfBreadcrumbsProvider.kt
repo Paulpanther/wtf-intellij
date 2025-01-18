@@ -29,12 +29,12 @@ class WtfBreadcrumbsProvider : BreadcrumbsProvider {
 
   override fun getElementInfo(element: PsiElement): String {
     return when (element) {
-      is WtfResourceDeclaration -> element.resourceName.text
-      is WtfRecordDeclaration -> element.recordName.text
-      is WtfFuncDeclaration -> element.functionName.text
-      is WtfVariantDeclaration -> element.variantName.text
-      is WtfEnumDeclaration -> element.enumName.text
-      is WtfResourceMethod -> element.functionName.text
+      is WtfResourceDeclaration -> element.name
+      is WtfRecordDeclaration -> element.name
+      is WtfFuncDeclaration -> element.name
+      is WtfVariantDeclaration -> element.name
+      is WtfEnumDeclaration -> element.name
+      is WtfResourceMethod -> element.name
       is WtfResourceConstructor -> "constructor"
       else -> throw RuntimeException("Unexpected element $element")
     }

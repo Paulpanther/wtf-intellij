@@ -1,33 +1,25 @@
 package com.paulmethfessel.wtfintellij.lang
 
-import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReferenceBase
-import com.intellij.psi.impl.source.tree.LeafPsiElement
+import com.paulmethfessel.wtfintellij.lang.psi.WtfConstructorExpr
+import com.paulmethfessel.wtfintellij.lang.psi.WtfEnumDeclaration
+import com.paulmethfessel.wtfintellij.lang.psi.WtfEnumValue
+import com.paulmethfessel.wtfintellij.lang.psi.WtfFuncDeclaration
 import com.paulmethfessel.wtfintellij.lang.psi.WtfFunctionCallName
-import com.paulmethfessel.wtfintellij.lang.psi.WtfNamedIdentifier
+import com.paulmethfessel.wtfintellij.lang.psi.WtfRecordDeclaration
+import com.paulmethfessel.wtfintellij.lang.psi.WtfResourceDeclaration
+import com.paulmethfessel.wtfintellij.lang.psi.WtfResourceMethod
+import com.paulmethfessel.wtfintellij.lang.psi.WtfTypedIdentifier
 import com.paulmethfessel.wtfintellij.lang.psi.WtfVariable
+import com.paulmethfessel.wtfintellij.lang.psi.WtfVariableDeclarationStmt
+import com.paulmethfessel.wtfintellij.lang.psi.WtfVariantDeclaration
+import com.paulmethfessel.wtfintellij.lang.psi.WtfVariantValue
 import com.paulmethfessel.wtfintellij.lang.refs.WtfFunctionReference
 import com.paulmethfessel.wtfintellij.lang.refs.WtfParameterReference
-import javax.swing.Icon
 
 
 object WtfPsiImplUtil {
-  @JvmStatic
-  fun getName(identifier: WtfNamedIdentifier): String = identifier.identifier.text
-
-  @JvmStatic
-  fun setName(identifier: WtfNamedIdentifier, newName: String): PsiElement? {
-    val node = identifier.identifier.node as? LeafPsiElement ?: return null
-    node.replaceWithText(newName)
-    return identifier
-  }
-
-  @JvmStatic
-  fun getNameIdentifier(identifier: WtfNamedIdentifier): PsiElement? {
-    return identifier.identifier
-  }
-
   @JvmStatic
   fun getReferences(variable: PsiElement): Array<PsiReferenceBase<PsiElement>> {
     return when (variable) {
@@ -38,19 +30,35 @@ object WtfPsiImplUtil {
   }
 
   @JvmStatic
-  fun getPresentation(element: WtfNamedIdentifier): ItemPresentation {
-    return object : ItemPresentation {
-      override fun getLocationString(): String {
-        return element.containingFile.name
-      }
+  fun getNameIdentifier(element: WtfRecordDeclaration): PsiElement = element.identifier
 
-      override fun getPresentableText(): String? {
-        return element.text
-      }
+  @JvmStatic
+  fun getNameIdentifier(element: WtfResourceDeclaration): PsiElement = element.identifier
 
-      override fun getIcon(unused: Boolean): Icon {
-        return element.getIcon(0)
-      }
-    }
-  }
+  @JvmStatic
+  fun getNameIdentifier(element: WtfResourceMethod): PsiElement = element.identifier
+
+  @JvmStatic
+  fun getNameIdentifier(element: WtfEnumDeclaration): PsiElement = element.identifier
+
+  @JvmStatic
+  fun getNameIdentifier(element: WtfEnumValue): PsiElement = element.identifier
+
+  @JvmStatic
+  fun getNameIdentifier(element: WtfVariantDeclaration): PsiElement = element.identifier
+
+  @JvmStatic
+  fun getNameIdentifier(element: WtfVariantValue): PsiElement = element.identifier
+
+  @JvmStatic
+  fun getNameIdentifier(element: WtfFuncDeclaration): PsiElement = element.identifier
+
+  @JvmStatic
+  fun getNameIdentifier(element: WtfTypedIdentifier): PsiElement = element.identifier
+
+  @JvmStatic
+  fun getNameIdentifier(element: WtfConstructorExpr): PsiElement = element.identifier
+
+  @JvmStatic
+  fun getNameIdentifier(element: WtfVariableDeclarationStmt): PsiElement = element.identifier
 }
